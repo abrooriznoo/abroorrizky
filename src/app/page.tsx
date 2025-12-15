@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import { HackathonCard } from "@/components/hackathon-card";
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
@@ -223,6 +224,7 @@ export default function Page() {
           </BlurFade>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }

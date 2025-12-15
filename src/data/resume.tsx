@@ -5,11 +5,11 @@ export const DATA = {
   name: "Abroor Rizky",
   initials: "AR",
   url: "https://abroorrizky.vercel.app",
-  location: "San Francisco, CA",
-  locationLink: "https://www.google.com/maps/place/sanfrancisco",
-  description: "a Fullstack Web Developer",
+  location: "Jakarta, Indonesia",
+  locationLink: "https://www.google.com/maps/place/jakarta",
+  description: "a Frontend Developer",
   summary:
-    "Experienced Fullstack Developer with a demonstrated history of working in the computer software industry. Skilled in React, Next.js, Typescript, Node.js, Python, and Go. Strong engineering professional with a Bachelor's Degree in Computer Science from the Open University.",
+    "Experienced Frontend Developer with a demonstrated history of working in the computer software industry. Skilled in React, Next.js, Typescript, Node.js, Python, and Go. Strong engineering professional with a Bachelor's Degree in Information Systems from the Open University.",
   avatarUrl: "/me.jpg",
   skills: [
     "React",
@@ -59,16 +59,14 @@ export const DATA = {
       //   icon: Icons.youtube,
       //   navbar: true,
       // },
-      email: {
+      Email: {
         name: "Send Email",
         url: "mailto:abroorforwork@gmail.com",
         icon: Icons.email,
-
-        navbar: false,
+        navbar: true,
       },
     },
   },
-
   work: [
     {
       company: "CV. Insipirasi Software",
@@ -99,7 +97,7 @@ export const DATA = {
     {
       school: "Open University of Jakarta",
       href: "https://www.ut.ac.id/",
-      degree: "Bachelor's Degree of Computer Science (BCS)",
+      degree: "Bachelor of Science (B.Sc.) in Information Systems",
       logoUrl: "/Educations/ut.png",
       start: "2024",
       end: "2026",
