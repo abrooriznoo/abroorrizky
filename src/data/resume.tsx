@@ -17,8 +17,9 @@ export const DATA = {
     "Typescript",
     "Node.js",
     "Python",
-    "Go",
+    "Golang",
     "Postgres",
+    "MySQL",
     "CSS",
     "HTML",
     "PHP",
@@ -29,8 +30,8 @@ export const DATA = {
     // { href: "/blog", icon: NotebookIcon, label: "Blog" },
   ],
   contact: {
-    email: "hello@example.com",
-    tel: "+123456789",
+    email: "abroorforwork@gmail.com",
+    tel: "+62 821-1310-7659",
     social: {
       GitHub: {
         name: "GitHub",
@@ -230,8 +231,7 @@ export const DATA = {
       location: "Jakarta Timur, Indonesia",
       description:
         "The Fullstack Junior Web Developer training program at the Center for Industrial Development Work Training (PPKPI) is a comprehensive, hands-on course designed to equip participants with the skills and knowledge necessary to excel in both frontend and backend web development. The curriculum covers a wide range of technologies, including HTML, CSS, JavaScript, Node.js, and databases, with a strong emphasis on practical application through real-world projects. Graduates of this program will be well-prepared to enter the workforce as competent and versatile fullstack web developers.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-western.png",
+      image: "/Bootcamp/PPKPI.png",
       mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-white.svg",
       links: [],
     },
@@ -241,8 +241,7 @@ export const DATA = {
       location: "Jakarta Utara, Indonesia",
       description:
         "The Junior Web Developer training program at the Regional Work Training Center (PPKD) in North Jakarta is an intensive, competency-based initiative designed to equip participants with essential, industry-relevant skills in modern web development. Focusing heavily on practical application, the curriculum covers core technologies such as HTML, CSS, and JavaScript, ensuring graduates are proficient in building functional, responsive web applications and prepared to enter the workforce as certified and job-ready junior developers.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-the-north.png",
+      image: "/Bootcamp/PPKD-JU.png",
       mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-white.svg",
       links: [
         {
@@ -264,8 +263,8 @@ export const DATA = {
       description:
         "The Fullstack Junior Web Developer training program at the Regional Work Training Center (PPKD) in Central Jakarta is a comprehensive, hands-on course designed to equip participants with the skills and knowledge necessary to excel in both frontend and backend web development. The curriculum covers a wide range of technologies, including HTML, CSS, JavaScript, Node.js, and databases, with a strong emphasis on practical application through real-world projects. Graduates of this program will be well-prepared to enter the workforce as competent and versatile fullstack web developers.",
       icon: "public",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/firstnet.png",
+      image: "/Bootcamp/PPKD-JP.jpeg",
+      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-white.svg",
       links: [
         {
           title: "BNSP Certificate",
