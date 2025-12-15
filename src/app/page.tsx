@@ -165,11 +165,12 @@ export default function Page() {
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   During my time in university, I attended{" "}
-                  {DATA.training.length}+ Bootcamp. That's awesome! At bootcamp,
-                  people from all over can come together and create
-                  extraordinary things. It's truly an eye-opening experience to
-                  see the limitless possibilities that can be realised thanks to
-                  the collaboration of motivated and passionate individuals!.
+                  {DATA.training.length}+ Bootcamp. That&apos;s awesome! At
+                  bootcamp, people from all over can come together and create
+                  extraordinary things. It&apos;s truly an eye-opening
+                  experience to see the limitless possibilities that can be
+                  realised thanks to the collaboration of motivated and
+                  passionate individuals!.
                 </p>
               </div>
             </div>
