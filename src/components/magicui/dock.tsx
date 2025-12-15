@@ -1,28 +1,55 @@
 "use client";
 
+import * as React from "react";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import React, { PropsWithChildren, useRef } from "react";
+
+/* -------------------------------------------------------------------------- */
+/*                                   TYPES                                    */
+/* -------------------------------------------------------------------------- */
 
 export interface DockProps extends VariantProps<typeof dockVariants> {
   className?: string;
+  style?: React.CSSProperties; // ✅ support inline style (glow, gradient, dll)
   magnification?: number;
   distance?: number;
   children: React.ReactNode;
 }
 
+export interface DockIconProps {
+  size?: number;
+  magnification?: number;
+  distance?: number;
+  mousex?: any;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  CONSTANTS                                 */
+/* -------------------------------------------------------------------------- */
+
 const DEFAULT_MAGNIFICATION = 60;
 const DEFAULT_DISTANCE = 140;
+
+/* -------------------------------------------------------------------------- */
+/*                                  VARIANTS                                  */
+/* -------------------------------------------------------------------------- */
 
 const dockVariants = cva(
   "mx-auto w-max h-full p-2 flex items-end rounded-full border"
 );
 
+/* -------------------------------------------------------------------------- */
+/*                                    DOCK                                    */
+/* -------------------------------------------------------------------------- */
+
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
   (
     {
       className,
+      style,
       children,
       magnification = DEFAULT_MAGNIFICATION,
       distance = DEFAULT_DISTANCE,
@@ -32,26 +59,26 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
   ) => {
     const mousex = useMotionValue(Infinity);
 
-    const renderChildren = () => {
-      return React.Children.map(children, (child: any) => {
+    const renderChildren = () =>
+      React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
+          return React.cloneElement(child as React.ReactElement<any>, {
             mousex,
             magnification,
             distance,
-          } as DockIconProps);
+          });
         }
         return child;
       });
-    };
 
     return (
       <motion.div
         ref={ref}
+        style={style}
         onMouseMove={(e) => mousex.set(e.pageX)}
         onMouseLeave={() => mousex.set(Infinity)}
-        {...props}
         className={cn(dockVariants({ className }))}
+        {...props}
       >
         {renderChildren()}
       </motion.div>
@@ -61,15 +88,9 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
 
 Dock.displayName = "Dock";
 
-export interface DockIconProps {
-  size?: number;
-  magnification?: number;
-  distance?: number;
-  mousex?: any;
-  className?: string;
-  children?: React.ReactNode;
-  props?: PropsWithChildren;
-}
+/* -------------------------------------------------------------------------- */
+/*                                 DOCK ICON                                  */
+/* -------------------------------------------------------------------------- */
 
 const DockIcon = ({
   size,
@@ -80,20 +101,23 @@ const DockIcon = ({
   children,
   ...props
 }: DockIconProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
   const distanceCalc = useTransform(mousex, (val: number) => {
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    const bounds = ref.current?.getBoundingClientRect() ?? {
+      x: 0,
+      width: 0,
+    };
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthSync = useTransform(
+  const widthSync = useTransform(
     distanceCalc,
     [-distance, 0, distance],
     [40, magnification, 40]
   );
 
-  let width = useSpring(widthSync, {
+  const width = useSpring(widthSync, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
@@ -115,5 +139,9 @@ const DockIcon = ({
 };
 
 DockIcon.displayName = "DockIcon";
+
+/* -------------------------------------------------------------------------- */
+/*                                   EXPORTS                                  */
+/* -------------------------------------------------------------------------- */
 
 export { Dock, DockIcon, dockVariants };

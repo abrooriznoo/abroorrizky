@@ -16,8 +16,28 @@ import Link from "next/link";
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
-  const [glow, setGlow] = useState({ x: 0, y: 0 });
   const lastScroll = useRef(0);
+
+  /* ===============================
+     Seamless glow state (inertia)
+  =============================== */
+  const glow = useRef({ x: 0, y: 0 });
+  const target = useRef({ x: 0, y: 0 });
+  const [, force] = useState(0);
+
+  useEffect(() => {
+    let raf: number;
+
+    const animate = () => {
+      glow.current.x += (target.current.x - glow.current.x) * 0.12;
+      glow.current.y += (target.current.y - glow.current.y) * 0.12;
+      force((v) => v + 1);
+      raf = requestAnimationFrame(animate);
+    };
+
+    animate();
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   /* ===============================
      Auto-hide on scroll
@@ -33,14 +53,12 @@ export default function Navbar() {
   }, []);
 
   /* ===============================
-     Cursor glow tracking
+     Cursor tracking
   =============================== */
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setGlow({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    target.current.x = e.clientX - rect.left;
+    target.current.y = e.clientY - rect.top;
   };
 
   return (
@@ -63,95 +81,62 @@ export default function Navbar() {
           "
         />
 
-        <Dock
-          onMouseMove={onMouseMove}
-          className={cn(
-            "relative pointer-events-auto flex items-center gap-1 px-2",
-            "h-14 sm:h-16",
+        <div onMouseMove={onMouseMove}>
+          <Dock
+            className={cn(
+              "relative pointer-events-auto flex items-center gap-1 px-2",
+              "h-14 sm:h-16",
 
-            // Liquid glass base
-            "rounded-2xl bg-white/10 dark:bg-black/30 backdrop-blur-3xl",
+              // Frosted glass
+              "rounded-2xl bg-gray-400/5 dark:bg-black/30",
+              "backdrop-blur-[18px] saturate-[1.25]",
 
-            // Border
-            "border border-white/30 dark:border-white/10",
+              // Border
+              "border border-gray-700/30 dark:border-white/10",
 
-            // Depth shadow
-            "shadow-[0_20px_60px_rgba(0,0,0,0.25)] dark:shadow-[0_20px_80px_rgba(0,0,0,0.6)]",
+              // Depth
+              "shadow-[0_30px_80px_rgba(0,0,0,0.35)] dark:shadow-[0_30px_120px_rgba(0,0,0,0.65)]",
 
-            // Top reflection
-            "before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none",
-            "before:bg-gradient-to-b before:from-white/40 before:to-transparent before:opacity-40"
-          )}
-          style={{
-            backgroundImage: `
-              radial-gradient(
-                140px circle at ${glow.x}px ${glow.y}px,
-                rgba(255,255,255,0.35),
-                transparent 60%
-              )
-            `,
-          }}
-        >
-          {/* MAIN NAV */}
-          {DATA.navbar.map((item) => (
-            <DockIcon key={item.href}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "icon" }),
-                      "group relative size-11 sm:size-12 rounded-xl",
-                      "hover:bg-white/25 dark:hover:bg-white/10",
-                      "transition-all duration-300 ease-out",
+              // Reflection
+              "before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none",
+              "before:bg-gradient-to-b before:from-white/35 before:to-transparent before:opacity-40",
 
-                      // Glow halo
-                      "after:absolute after:inset-0 after:rounded-xl after:opacity-0",
-                      "after:bg-white/40 after:blur-xl after:transition-opacity",
-                      "group-hover:after:opacity-70"
-                    )}
-                  >
-                    <item.icon
-                      className="
-                        size-5
-                        opacity-80
-                        transition-all duration-300
-                        group-hover:opacity-100
-                        group-hover:scale-110
-                        group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]
-                      "
-                    />
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>{item.label}</TooltipContent>
-              </Tooltip>
-            </DockIcon>
-          ))}
-
-          <Separator orientation="vertical" className="h-7 bg-white/20" />
-
-          {/* SOCIAL */}
-          {Object.entries(DATA.contact.social)
-            .filter(([_, social]) => social.navbar)
-            .map(([name, social]) => (
-              <DockIcon key={name}>
+              // ❄️ Noise glass
+              "after:absolute after:inset-0 after:rounded-2xl after:pointer-events-none",
+              "after:bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)]",
+              "after:bg-[length:4px_4px]",
+              "after:opacity-[0.18] after:mix-blend-overlay"
+            )}
+            style={{
+              backgroundImage: `
+                radial-gradient(
+                  180px circle at ${glow.current.x}px ${glow.current.y}px,
+                  rgba(255,255,255,0.38),
+                  transparent 48%
+                )
+              `,
+            }}
+          >
+            {/* MAIN NAV */}
+            {DATA.navbar.map((item) => (
+              <DockIcon key={item.href}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
-                      href={social.url}
+                      href={item.href}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
                         "group relative size-11 sm:size-12 rounded-xl",
                         "hover:bg-white/25 dark:hover:bg-white/10",
-                        "transition-all duration-300",
+                        "transition-all duration-300 ease-out",
 
-                        // Glow
+                        // Glow halo
                         "after:absolute after:inset-0 after:rounded-xl after:opacity-0",
-                        "after:bg-white/40 after:blur-xl",
+                        "after:bg-white/40 after:blur-xl after:transition-opacity",
                         "group-hover:after:opacity-70"
                       )}
                     >
-                      <social.icon
+                      <item.icon
                         className="
                           size-5
                           opacity-80
@@ -163,32 +148,70 @@ export default function Navbar() {
                       />
                     </Link>
                   </TooltipTrigger>
-                  <TooltipContent>{name}</TooltipContent>
+                  <TooltipContent>{item.label}</TooltipContent>
                 </Tooltip>
               </DockIcon>
             ))}
 
-          <Separator orientation="vertical" className="h-7 bg-white/20" />
+            <Separator
+              orientation="vertical"
+              className="h-7 bg-gray-700/30 dark:bg-white/20"
+            />
 
-          {/* THEME */}
-          <DockIcon>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className="
-                    group relative size-11 sm:size-12 rounded-xl
-                    flex items-center justify-center
-                    hover:bg-white/25 dark:hover:bg-white/10
-                    transition-all duration-300
-                  "
-                >
-                  <ModeToggle />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>Theme</TooltipContent>
-            </Tooltip>
-          </DockIcon>
-        </Dock>
+            {/* SOCIAL */}
+            {Object.entries(DATA.contact.social)
+              .filter(([_, social]) => social.navbar)
+              .map(([name, social]) => (
+                <DockIcon key={name}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href={social.url}
+                        className={cn(
+                          buttonVariants({ variant: "ghost", size: "icon" }),
+                          "group relative size-11 sm:size-12 rounded-xl",
+                          "hover:bg-white/25 dark:hover:bg-white/10",
+                          "transition-all duration-300",
+                          "after:absolute after:inset-0 after:rounded-xl after:opacity-0",
+                          "after:bg-white/40 after:blur-xl",
+                          "group-hover:after:opacity-70"
+                        )}
+                      >
+                        <social.icon
+                          className="
+                            size-5
+                            opacity-80
+                            transition-all duration-300
+                            group-hover:opacity-100
+                            group-hover:scale-110
+                            group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]
+                          "
+                        />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>{name}</TooltipContent>
+                  </Tooltip>
+                </DockIcon>
+              ))}
+
+            <Separator
+              orientation="vertical"
+              className="h-7 bg-gray-700/30 dark:bg-white/20"
+            />
+
+            {/* THEME */}
+            <DockIcon>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="group relative size-11 sm:size-12 rounded-xl flex items-center justify-center hover:bg-white/25 dark:hover:bg-white/10 transition-all duration-300">
+                    <ModeToggle />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>Theme</TooltipContent>
+              </Tooltip>
+            </DockIcon>
+          </Dock>
+        </div>
       </div>
 
       {/* ================= Back to Top ================= */}
@@ -210,13 +233,7 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={2.5}
                 stroke="currentColor"
-                className="
-                  size-5
-                  opacity-80
-                  transition-all duration-300
-                  group-hover:opacity-100
-                  group-hover:-translate-y-1
-                "
+                className="size-5 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1"
               >
                 <path
                   strokeLinecap="round"
