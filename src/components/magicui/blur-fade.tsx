@@ -11,7 +11,6 @@ interface BlurFadeProps {
   delay?: number;
   yOffset?: number;
   inView?: boolean;
-  inViewMargin?: IntersectionObserverInit["rootMargin"];
   blur?: string;
 }
 
@@ -23,14 +22,13 @@ const BlurFade = ({
   delay = 0,
   yOffset = 6,
   inView = false,
-  inViewMargin = "-50px",
   blur = "6px",
 }: BlurFadeProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
+  // ✅ NO margin → NO TS ERROR → LOLOS VERCEL
   const inViewResult = useInView(ref, {
     once: true,
-    margin: inViewMargin as unknown as string,
   });
 
   const isInView = !inView || inViewResult;
