@@ -60,7 +60,20 @@ export const ResumeCard = ({
         <div className="flex-grow ml-4 items-center flex-col group">
           <CardHeader>
             <div className="flex items-center justify-between gap-x-2 text-base">
-              <h3 className="inline-flex items-center justify-center font-semibold leading-none text-xs sm:text-sm">
+              <h3
+                className="
+                  inline-flex
+                  items-center
+                  justify-center
+                  font-semibold
+                  leading-[1.3]
+                  text-xs sm:text-sm
+                  max-w-[10ch]
+                  sm:max-w-[20ch]
+                  break-words
+                  text-left
+                "
+              >
                 {title}
                 <ChevronRightIcon
                   className={cn(
@@ -71,13 +84,13 @@ export const ResumeCard = ({
               </h3>
               <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right">
                 {period}
-                <div className="mt-2">
+                <div className="mb-2">
                   {scores && (
                     <span className="inline-flex gap-x-1">
                       {scores.map((score, index) => (
                         <Badge
                           variant="outline"
-                          className="align-middle text-xs"
+                          className="align-middle text-[10px] sm:text-xs"
                           key={index}
                         >
                           {score}

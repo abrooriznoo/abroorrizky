@@ -101,7 +101,7 @@ export const DATA = {
       logoUrl: "/Educations/ut.png",
       start: "2024",
       end: "2026",
-      scores: ["GPA: 3.75/4.00"],
+      scores: ["3.20 / 4.00"],
     },
     {
       school: "SMK AL-BAHRI",
@@ -110,7 +110,7 @@ export const DATA = {
       logoUrl: "/Educations/ab.png",
       start: "2016",
       end: "2019",
-      scores: ["FINAL EXAM: 81.81/100"],
+      scores: ["81.81 / 100"],
     },
   ],
   projects: [
