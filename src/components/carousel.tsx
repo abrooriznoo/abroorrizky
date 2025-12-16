@@ -31,8 +31,8 @@ export function ProjectCarousel({ children }: Props) {
       onMouseLeave={() => autoplay.current.reset()}
     >
       <CarouselContent>{children}</CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="hidden md:flex" />
+      <CarouselNext className="hidden md:flex" />
     </Carousel>
   );
 }

@@ -143,7 +143,9 @@ export default function Page() {
                 <CarouselItem
                   key={project.title}
                   index={id}
-                  className="basis-full sm:basis-1/2 px-2"
+                  className="
+                    basis-full
+                    sm:basis-1/2"
                 >
                   <ProjectCard
                     href={project.href}
