@@ -71,7 +71,7 @@ export const DATA = {
     {
       company: "CV. Insipirasi Software",
       href: "#",
-      badges: [],
+      badges: ["Freelance"],
       location: "Bekasi, Indonesia",
       title: "Frontend Developer",
       logoUrl: "/Company/company.webp",
@@ -82,7 +82,7 @@ export const DATA = {
     },
     {
       company: "PT. Jakarta Cakratunggal Steel Mills",
-      badges: [],
+      badges: ["Internship"],
       href: "https://www.cakrasteel.co.id/",
       location: "Jakarta, Indonesia",
       title: "IT Support Technician",
@@ -101,6 +101,7 @@ export const DATA = {
       logoUrl: "/Educations/ut.png",
       start: "2024",
       end: "2026",
+      scores: ["GPA: 3.75/4.00"],
     },
     {
       school: "SMK AL-BAHRI",
@@ -109,6 +110,7 @@ export const DATA = {
       logoUrl: "/Educations/ab.png",
       start: "2016",
       end: "2019",
+      scores: ["FINAL EXAM: 81.81/100"],
     },
   ],
   projects: [

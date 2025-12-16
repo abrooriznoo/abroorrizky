@@ -16,6 +16,7 @@ interface ResumeCardProps {
   subtitle?: string;
   href?: string;
   badges?: readonly string[];
+  scores?: readonly string[];
   period: string;
   description?: string;
 }
@@ -26,6 +27,7 @@ export const ResumeCard = ({
   subtitle,
   href,
   badges,
+  scores,
   period,
   description,
 }: ResumeCardProps) => {
@@ -44,7 +46,7 @@ export const ResumeCard = ({
       className="block cursor-pointer"
       onClick={handleClick}
     >
-      <Card className="flex p-5">
+      <Card className="flex p-5 items-center gap-4 shadow hover:shadow-lg transition-all duration-300 ease-out">
         <div className="flex-none">
           <Avatar className="border size-12 m-auto bg-muted-background dark:bg-foreground">
             <AvatarImage
@@ -60,19 +62,6 @@ export const ResumeCard = ({
             <div className="flex items-center justify-between gap-x-2 text-base">
               <h3 className="inline-flex items-center justify-center font-semibold leading-none text-xs sm:text-sm">
                 {title}
-                {badges && (
-                  <span className="inline-flex gap-x-1">
-                    {badges.map((badge, index) => (
-                      <Badge
-                        variant="secondary"
-                        className="align-middle text-xs"
-                        key={index}
-                      >
-                        {badge}
-                      </Badge>
-                    ))}
-                  </span>
-                )}
                 <ChevronRightIcon
                   className={cn(
                     "size-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100",
@@ -82,9 +71,37 @@ export const ResumeCard = ({
               </h3>
               <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right">
                 {period}
+                <div className="mt-2">
+                  {scores && (
+                    <span className="inline-flex gap-x-1">
+                      {scores.map((score, index) => (
+                        <Badge
+                          variant="outline"
+                          className="align-middle text-xs"
+                          key={index}
+                        >
+                          {score}
+                        </Badge>
+                      ))}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             {subtitle && <div className="font-sans text-xs">{subtitle}</div>}
+            {badges && (
+              <span className="inline-flex mt-2 gap-x-1">
+                {badges.map((badge, index) => (
+                  <Badge
+                    variant="secondary"
+                    className="align-middle text-xs"
+                    key={index}
+                  >
+                    {badge}
+                  </Badge>
+                ))}
+              </span>
+            )}
           </CardHeader>
           {description && (
             <motion.div

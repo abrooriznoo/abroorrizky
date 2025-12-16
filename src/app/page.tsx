@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import { ProjectCarousel } from "@/components/carousel";
+import { CarouselItem } from "@/components/ui/carousel";
 
 const BLUR_FADE_DELAY = 0.08;
 
@@ -92,6 +94,7 @@ export default function Page() {
                 altText={education.school}
                 title={education.school}
                 subtitle={education.degree}
+                scores={education.scores}
                 period={`${education.start} - ${education.end}`}
               />
             </BlurFade>
@@ -133,26 +136,29 @@ export default function Page() {
               </div>
             </div>
           </BlurFade>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
-            {DATA.projects.map((project, id) => (
-              <BlurFade
-                key={project.title}
-                delay={BLUR_FADE_DELAY * 12 + id * 0.05}
-              >
-                <ProjectCard
-                  href={project.href}
+
+          <BlurFade delay={BLUR_FADE_DELAY * 12}>
+            <ProjectCarousel>
+              {DATA.projects.map((project, id) => (
+                <CarouselItem
                   key={project.title}
-                  title={project.title}
-                  description={project.description}
-                  dates={project.dates}
-                  tags={project.technologies}
-                  image={project.image}
-                  video={project.video}
-                  links={project.links}
-                />
-              </BlurFade>
-            ))}
-          </div>
+                  index={id}
+                  className="basis-full sm:basis-1/2 px-2"
+                >
+                  <ProjectCard
+                    href={project.href}
+                    title={project.title}
+                    description={project.description}
+                    dates={project.dates}
+                    tags={project.technologies}
+                    image={project.image}
+                    video={project.video}
+                    links={project.links}
+                  />
+                </CarouselItem>
+              ))}
+            </ProjectCarousel>
+          </BlurFade>
         </div>
       </section>
       <section id="upskilling">

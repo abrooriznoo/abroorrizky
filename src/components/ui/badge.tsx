@@ -21,6 +21,8 @@ const badgeVariants = cva(
           before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/40 before:to-transparent before:opacity-20 before:pointer-events-none \
           hover:bg-white/20 hover:border-white/30 \
           dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10",
+        gradation:
+          "border-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow hover:opacity-90",
       },
     },
     defaultVariants: {
